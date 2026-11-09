@@ -34,7 +34,7 @@ body {
 #homeView {
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: center; /* 画面中央に配置 */
     align-items: center;
     min-height: 100vh;
     padding: 20px;
@@ -42,18 +42,18 @@ body {
     background-color: #FFFFFF;
 }
 
-/* メインタイトル（Phosphate指定・行間とバランスを画像に厳密に合わせる） */
+/* メインタイトル（Phosphate指定・行間を極限まで詰める） */
 #homeView .logo {
     font-family: 'Phosphate', sans-serif;
     font-size: clamp(3rem, 11vw, 5.5rem);
     color: var(--text);
     letter-spacing: 0px;
-    line-height: 0.85; /* 上下の文字が密着するよう行間を極限まで詰める */
-    margin-bottom: 12px;
+    line-height: 0.85; /* 上下の文字が密着するよう行間を詰める */
+    margin-bottom: 16px;
     text-transform: uppercase;
 }
 
-/* サブタイトル（Kohinoor Telugu指定・行間調整） */
+/* サブタイトル（Kohinoor Telugu指定） */
 #homeView .subtitle {
     font-family: 'Kohinoor Telugu', sans-serif;
     font-weight: 700;
@@ -94,7 +94,7 @@ body {
 #contentView {
     display: none;
     flex-direction: column;
-    justify-content: flex-start; /* 中央寄せを解除し、上部に詰める */
+    justify-content: flex-start; /* ★重要：中央寄せを解除し、上部に詰める */
     align-items: stretch;
     min-height: 100vh;
 }
@@ -102,7 +102,7 @@ body {
 header {
     background-color: var(--card-bg);
     border-bottom: 1px solid var(--border);
-    padding: 12px 16px; /* 上下の無駄な余白を大幅に削減 */
+    padding: 12px 16px; /* 上下の無駄な余白を削減 */
     text-align: center;
     position: sticky;
     top: 0;
@@ -160,7 +160,7 @@ main {
     max-width: 1000px;
     width: 100%;
     margin: 0 auto;
-    padding: 16px 16px 40px; /* 上部の余白を削り、スクロールなしでコンテンツが見えるように */
+    padding: 20px 16px 40px; /* 上部の余白を削り、すぐにコンテンツが見えるように */
     flex: 1;
 }
 

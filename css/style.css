@@ -1,16 +1,15 @@
 /* ================= ==========================
-   NIHONGO KEIZOKU - Base Styles
+   NIHONGO KEIZOKU - Base Styles & Responsive Design
    =========================================== */
 :root {
-    --bg: #F8F9FA;
+    --bg: #FFFFFF;
     --card-bg: #FFFFFF;
-    --text: #212529;
-    --muted: #6C757D;
-    --primary: #4A90E2;
-    --primary-hover: #357ABD;
-    --accent: #E74C3C;
-    --border: #E9ECEF;
-    --shadow: 0 4px 12px rgba(0,0,0,0.05);
+    --text: #111111;
+    --muted: #666666;
+    --primary: #2B59C3;
+    --primary-hover: #1E408A;
+    --border: #E5E7EB;
+    --shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
     --radius: 16px;
 }
 
@@ -25,73 +24,120 @@ body {
     background-color: var(--bg);
     color: var(--text);
     line-height: 1.6;
-    display: flex;
-    flex-direction: column;
     min-height: 100vh;
 }
 
 /* -------------------------------------------
-   Header & Title Area
+   1. メイン画面（独立したトップ画面 / ホーム）
    ------------------------------------------- */
+#homeView {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    padding: 20px;
+    text-align: center;
+    background-color: #FFFFFF;
+}
+
+/* タイトル：画面幅に合わせて最小2.2rem〜最大4.5remの間で可変 */
+#homeView .logo {
+    font-family: 'Bungee Inline', cursive;
+    font-size: clamp(2.2rem, 8.5vw, 4.5rem);
+    color: var(--text);
+    letter-spacing: 2px;
+    line-height: 1.1;
+    margin-bottom: 8px;
+    text-transform: uppercase;
+    word-break: break-word;
+}
+
+/* サブタイトル：画面幅に合わせて自動調整 */
+#homeView .subtitle {
+    font-family: 'Zen Maru Gothic', sans-serif;
+    font-weight: 900;
+    font-size: clamp(0.9rem, 3vw, 1.25rem);
+    color: var(--text);
+    margin-bottom: 32px;
+}
+
+/* スタートボタン（カプセル型アイコン） */
+.start-btn {
+    background-color: var(--primary);
+    color: #FFFFFF;
+    border: none;
+    padding: 14px 48px;
+    border-radius: 50px;
+    font-family: 'Zen Maru Gothic', sans-serif;
+    font-weight: 900;
+    font-size: clamp(1.1rem, 4vw, 1.4rem);
+    cursor: pointer;
+    box-shadow: 0 4px 14px rgba(43, 89, 195, 0.35);
+    transition: transform 0.2s, background-color 0.2s, box-shadow 0.2s;
+}
+
+.start-btn:hover {
+    background-color: var(--primary-hover);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(43, 89, 195, 0.45);
+}
+
+.start-btn:active {
+    transform: translateY(0);
+}
+
+/* -------------------------------------------
+   2. コンテンツ画面（別切り替え画面）
+   ------------------------------------------- */
+#contentView {
+    display: none; /* 初期状態では非表示（メイン画面と独立） */
+    flex-direction: column;
+    min-height: 100vh;
+}
+
 header {
     background-color: var(--card-bg);
     border-bottom: 1px solid var(--border);
-    padding: 30px 20px 20px;
+    padding: 20px;
     text-align: center;
     position: sticky;
     top: 0;
     z-index: 100;
 }
 
-/* タイトルのレスポンシブ文字サイズ設定 (パターンB: clamp) */
-.logo {
+header .logo {
     font-family: 'Bungee Inline', cursive;
-    /* 最小2.0rem 〜 画面幅の7% 〜 最大3.8rem の間で自動伸縮 */
-    font-size: clamp(2rem, 7vw, 3.8rem);
+    font-size: clamp(1.8rem, 6vw, 3rem);
     color: var(--text);
-    letter-spacing: 2px;
     line-height: 1.1;
-    margin-bottom: 4px;
-    text-transform: uppercase;
 }
 
-.subtitle {
+header .subtitle {
     font-family: 'Zen Maru Gothic', sans-serif;
     font-weight: 900;
-    font-size: clamp(0.85rem, 2.5vw, 1.1rem);
+    font-size: clamp(0.8rem, 2.2vw, 1rem);
     color: var(--muted);
-    margin-bottom: 12px;
 }
 
-/* -------------------------------------------
-   Navigation / Controls
-   ------------------------------------------- */
 .controls {
     display: flex;
     justify-content: center;
     align-items: center;
     gap: 12px;
-    margin-top: 10px;
+    margin-top: 12px;
 }
 
 .btn {
     background-color: var(--primary);
     color: #FFF;
     border: none;
-    padding: 8px 16px;
+    padding: 8px 18px;
     border-radius: 20px;
     font-weight: 700;
     font-size: 0.9rem;
     cursor: pointer;
-    transition: background-color 0.2s, transform 0.1s;
-}
-
-.btn:hover {
-    background-color: var(--primary-hover);
-}
-
-.btn:active {
-    transform: scale(0.98);
+    transition: background-color 0.2s;
 }
 
 .btn-secondary {
@@ -100,13 +146,8 @@ header {
     border: 1px solid var(--border);
 }
 
-.btn-secondary:hover {
-    background-color: var(--border);
-    color: var(--text);
-}
-
 /* -------------------------------------------
-   Main Container & Cards Grid
+   3. メインエリア ＆ グリッド
    ------------------------------------------- */
 main {
     max-width: 1000px;
@@ -120,11 +161,46 @@ main {
     font-size: 1.2rem;
     font-weight: 700;
     margin: 24px 0 16px;
-    display: flex;
-    align-items: center;
-    gap: 8px;
 }
 
 .articles-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, min
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 20px;
+}
+
+.article-card {
+    background-color: var(--card-bg);
+    border-radius: var(--radius);
+    overflow: hidden;
+    box-shadow: var(--shadow);
+    border: 1px solid var(--border);
+    cursor: pointer;
+    transition: transform 0.2s;
+}
+
+.article-card:hover {
+    transform: translateY(-4px);
+}
+
+.card-img {
+    width: 100%;
+    height: 160px;
+    object-fit: cover;
+}
+
+.card-body {
+    padding: 16px;
+}
+
+/* -------------------------------------------
+   4. モーダル
+   ------------------------------------------- */
+.modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background

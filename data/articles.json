@@ -1,0 +1,41 @@
+{
+  "free": [
+    {
+      "title": "コンビニのおにぎり",
+      "plainTitle": "コンビニのおにぎり",
+      "img": "https://images.unsplash.com/photo-1584622650111-993a426fbf0a?w=500&auto=format&fit=crop",
+      "audioUrl": "",
+      "content": "<ruby>日本<rt>にほん</rt></ruby>に<ruby>行<rt>い</rt></ruby>ったら、ぜひコンビニのおにぎりを<ruby>食<rt>た</rt></ruby>べてみてください。<br><br><ruby>種類<rt>しゅるい</rt></ruby>がとても<ruby>多<rt>おお</rt></ruby>いので、<ruby>選<rt>えら</rt></ruby>ぶのが<ruby>楽<rt>たの</rt></ruby>しいです。<ruby>昔<rt>むかし</rt></ruby>から<ruby>人気<rt>にんき</rt></ruby>があるのは、<ruby>梅干<rt>うめぼし</rt></ruby>、<ruby>鮭<rt>さけ</rt></ruby>、ツナマヨなどです。",
+      "plain": "日本に行ったら、ぜひコンビニのおにぎりを食べてみてください。種類がとても多いので、選ぶのが楽しいです。昔から人気があるのは、梅干、鮭、ツナマヨなどです。",
+      "translation": "<b>[English]</b><br>If you go to Japan, please try the convenience store onigiri. Since there are so many varieties, it is fun to choose.<br><br><b>[Español]</b><br>Si vas a Japón, por favor prueba el onigiri de las tiendas de conveniencia. Como hay muchísimas variedades, es divertido elegir.",
+      "vocab": [
+        "種類（しゅるい）: Variety / Variedad",
+        "人気（にんき）: Popularity / Popularidad",
+        "梅干（うめぼし）: Pickled plum / Ciruela encurtida",
+        "鮭（さけ）: Salmon / Salmón"
+      ]
+    },
+    {
+      "title": "ウォッシュレット",
+      "plainTitle": "ウォッシュレット",
+      "img": "https://images.unsplash.com/photo-1542171249-14e3b1c67d71?w=500&auto=format&fit=crop",
+      "audioUrl": "",
+      "content": "<ruby>準備中<rt>じゅんびちゅう</rt></ruby>です。",
+      "plain": "準備中です。",
+      "translation": "Coming soon.",
+      "vocab": []
+    }
+  ],
+  "premium": [
+    {
+      "title": "<ruby>駅弁<rt>えきべん</rt></ruby>",
+      "plainTitle": "駅弁",
+      "img": "https://images.unsplash.com/photo-1524413840807-0c3cb6fa808d?w=500&auto=format&fit=crop"
+    },
+    {
+      "title": "<ruby>居酒屋<rt>いざかや</rt></ruby><ruby>文化<rt>ぶんか</rt></ruby><ruby>全般<rt>ぜんぱん</rt></ruby>",
+      "plainTitle": "居酒屋文化全般",
+      "img": "https://images.unsplash.com/photo-1552604617-64b5bc08b292?w=500&auto=format&fit=crop"
+    }
+  ]
+}

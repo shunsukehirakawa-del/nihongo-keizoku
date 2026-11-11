@@ -264,3 +264,347 @@ rt {
     #homeView, #contentView, .start-btn, .card { transition: none; }
     .start-btn:hover, .help-btn:hover, .login-btn:hover, .card:hover { transform: none; }
 }
+/* =========================================================
+   ここから追加：モーダル・ピクトグラム・How to use
+   ========================================================= */
+
+.sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    white-space: nowrap;
+}
+[hidden] { display: none !important; }
+body.modal-open { overflow: hidden; }
+
+/* ---------- モーダル共通 ---------- */
+.modal {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(15, 23, 42, 0.6);
+    backdrop-filter: blur(8px);
+    justify-content: center;
+    align-items: center;
+    z-index: 100;
+}
+.modal.is-open { display: flex; }
+
+.modal-content {
+    background: #fff;
+    padding: 30px 24px 24px;
+    border-radius: 24px;
+    width: 92%;
+    max-width: 500px;
+    max-height: 88vh;
+    overflow-y: auto;
+    position: relative;
+}
+
+.close-btn {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    width: 44px;
+    height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.4rem;
+    border: none;
+    background: none;
+    color: var(--muted);
+    cursor: pointer;
+    border-radius: 50%;
+}
+.close-btn:hover { background: #f1f5f9; }
+.close-btn.small { top: 8px; right: 8px; }
+
+.modal-title {
+    font-size: 1.6rem;
+    line-height: 1.5;
+    padding-right: 40px;
+    margin: 0 0 16px;
+}
+
+/* ---------- 操作ボタン（ピクトグラム） ---------- */
+.modal-controls {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    margin-bottom: 8px;
+    flex-wrap: wrap;
+}
+.sub-btn {
+    background: #f1f5f9;
+    color: var(--text);
+    border: none;
+    width: 52px;
+    height: 44px;
+    border-radius: 9999px;
+    font-size: 1.4rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: 0.2s;
+}
+.sub-btn:hover { background: #e2e8f0; }
+
+.switch-label {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    height: 44px;
+    padding: 0 16px;
+    background: #f1f5f9;
+    border-radius: 9999px;
+    cursor: pointer;
+}
+.switch-label input { display: none; }
+.ruby-icon ruby { font-size: 1.15rem; font-weight: 700; }
+.ruby-icon rt   { font-size: 0.5em; color: var(--primary); }
+.switch-box {
+    width: 34px;
+    height: 18px;
+    background: #cbd5e1;
+    border-radius: 9999px;
+    position: relative;
+    transition: 0.3s;
+}
+.switch-box::before {
+    content: '';
+    width: 14px;
+    height: 14px;
+    background: #fff;
+    border-radius: 50%;
+    position: absolute;
+    top: 2px;
+    left: 2px;
+    transition: 0.3s;
+}
+.switch-label input:checked + .switch-box { background: var(--primary); }
+.switch-label input:checked + .switch-box::before { left: 18px; }
+
+/* ---------- 記事の本文（修正①：段落の間 / 修正②：ふりがな） ---------- */
+.ruby-text {
+    font-size: 1.35rem;
+    line-height: 2.1;
+    margin-top: 12px;
+    color: var(--text);
+}
+.ruby-text p { margin: 0 0 0.9em; }
+.ruby-text p:last-child { margin-bottom: 0; }
+.ruby-text.hide-ruby { line-height: 1.8; }
+.hide-ruby rt { display: none !important; }
+
+ruby, rt { ruby-align: center; }
+rt { font-size: 0.48em; letter-spacing: -0.02em; }
+
+/* ---------- スピード ---------- */
+.speed-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin: 22px 0 16px;
+}
+.speed-icon {
+    width: 40px;
+    height: 40px;
+    border: none;
+    background: #f1f5f9;
+    border-radius: 50%;
+    font-size: 1.3rem;
+    color: var(--text);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    flex-shrink: 0;
+}
+.speed-end { font-size: 0.75rem; color: var(--muted); font-weight: 700; flex-shrink: 0; }
+.speed-row input[type="range"] { flex: 1; min-width: 0; }
+.speed-now { font-weight: 700; min-width: 40px; text-align: right; flex-shrink: 0; }
+
+/* ---------- 再生ボタン ---------- */
+.play-btn {
+    width: 100%;
+    height: 56px;
+    background: var(--primary);
+    color: #fff;
+    border: none;
+    border-radius: 14px;
+    font-size: 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: 0.2s;
+}
+.play-btn:hover { background: var(--primary-hover); }
+
+/* ---------- 翻訳・語彙のウィンドウ ---------- */
+.sub-window {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.25);
+    justify-content: center;
+    align-items: center;
+    z-index: 200;
+}
+.sub-window.is-open { display: flex; }
+.sub-window-content {
+    background: #fff;
+    padding: 28px 24px 24px;
+    border-radius: 24px;
+    width: 88%;
+    max-width: 420px;
+    max-height: 72vh;
+    overflow-y: auto;
+    position: relative;
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.15);
+}
+.sub-title {
+    margin: 0 0 12px;
+    font-size: 1.1rem;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: var(--primary);
+}
+.sub-text   { line-height: 1.8; font-size: 1rem; margin: 0; }
+.vocab-list { padding-left: 20px; line-height: 2; font-size: 1rem; margin: 0; }
+
+/* ---------- タップで出るラベル ---------- */
+#tip {
+    position: fixed;
+    left: 0;
+    top: 0;
+    z-index: 500;
+    background: #1e293b;
+    color: #fff;
+    font-size: 0.8rem;
+    font-weight: 700;
+    padding: 6px 10px;
+    border-radius: 8px;
+    white-space: nowrap;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.15s;
+}
+#tip.is-on { opacity: 1; }
+
+/* ---------- How to use ---------- */
+.tabs { display: flex; gap: 8px; margin: 0 40px 16px 0; }
+.tab {
+    flex: 1;
+    padding: 10px;
+    border: none;
+    border-radius: 9999px;
+    background: #f1f5f9;
+    color: var(--text);
+    font-family: inherit;
+    font-weight: 700;
+    cursor: pointer;
+}
+.tab[aria-selected="true"] { background: var(--primary); color: #fff; }
+
+.help-title { font-size: 1.4rem; margin-bottom: 12px; }
+.modal-content p { line-height: 1.8; }
+
+.steps { list-style: none; counter-reset: step; padding: 0; margin: 16px 0; }
+.steps li {
+    counter-increment: step;
+    position: relative;
+    padding-left: 40px;
+    margin-bottom: 18px;
+    line-height: 1.8;
+}
+.steps li::before {
+    content: counter(step);
+    position: absolute;
+    left: 0;
+    top: 3px;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background: var(--primary);
+    color: #fff;
+    font-weight: 700;
+    font-size: 0.85rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.chip {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 28px;
+    height: 28px;
+    padding: 0 6px;
+    margin: 0 2px;
+    border-radius: 8px;
+    background: #e0e7ff;
+    color: var(--primary);
+    font-size: 1.1rem;
+    vertical-align: middle;
+}
+.chip ruby { font-size: 1rem; font-weight: 700; }
+
+.keep-going {
+    text-align: center;
+    font-size: 1.3rem;
+    font-weight: 700;
+    margin: 24px 0 8px;
+}
+.keep-going span { font-size: 1rem; color: var(--primary); }
+.small-note { font-size: 0.85rem; color: var(--muted); text-align: center; margin: 12px 0 0; }
+/* ---------- 再生・スピードを本文の上に（スクロールしても残す） ---------- */
+.audio-panel {
+    position: sticky;
+    top: 0;
+    z-index: 5;
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 16px;
+    padding: 12px;
+    margin: 8px 0 4px;
+}
+.audio-panel .play-btn  { height: 52px; }
+.audio-panel .speed-row { margin: 12px 0 0; }
+.ruby-text { margin-top: 16px; }
+/* ---------- 再生とスピードを1行に ---------- */
+.audio-panel {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 10px 12px;
+}
+.audio-panel .play-btn {
+    width: 52px;
+    height: 52px;
+    flex-shrink: 0;
+    border-radius: 50%;
+    font-size: 1.6rem;
+    box-shadow: 0 4px 10px rgba(79, 70, 229, 0.3);
+}
+.audio-panel .speed-row {
+    flex: 1;
+    min-width: 0;
+    margin: 0;
+    gap: 6px;
+}
+.audio-panel .speed-icon {
+    width: 32px;
+    height: 32px;
+    font-size: 1.1rem;
+}
+
+/* 画面が狭いときは、両端の数字を隠してスライダーを広く */
+@media (max-width: 420px) {
+    .audio-panel .speed-end { display: none; }
+}

@@ -15,6 +15,9 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Bungee+Inline&family=M+PLUS+Rounded+1c:wght@400;700&family=Zen+Maru+Gothic:wght@900&display=swap" rel="stylesheet">
 
+    <!-- ピクトグラム用アイコン (Tabler Icons) -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.19.0/dist/tabler-icons.min.css">
+
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
@@ -61,6 +64,121 @@
         </section>
     </main>
 </div>
+
+<!-- ===== 記事モーダル ===== -->
+<div id="modal" class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+    <div class="modal-content">
+        <button type="button" class="close-btn" id="modalClose" aria-label="Close">
+            <i class="ti ti-x" aria-hidden="true"></i>
+        </button>
+        <h2 id="modalTitle" class="modal-title"></h2>
+
+        <div class="modal-controls">
+            <label class="switch-label" id="rubyLabel" title="Furigana">
+                <span class="ruby-icon" aria-hidden="true"><ruby>字<rt>じ</rt></ruby></span>
+                <span class="sr-only">Furigana</span>
+                <input type="checkbox" id="rubyToggle" checked>
+                <div class="switch-box"></div>
+            </label>
+            <button type="button" class="sub-btn" id="translateBtn" data-tip="Translate / Traducir" aria-label="Translate">
+                <i class="ti ti-language" aria-hidden="true"></i>
+            </button>
+            <button type="button" class="sub-btn" id="vocabBtn" data-tip="Vocabulary / Vocabulario" aria-label="Vocabulary">
+                <i class="ti ti-book" aria-hidden="true"></i>
+            </button>
+        </div>
+
+        <!-- 再生とスピード（本文の上・1行） -->
+        <div class="audio-panel">
+            <audio id="articleAudio"></audio>
+
+            <button type="button" class="play-btn" id="playBtn" data-tip="Play / Reproducir" aria-label="Play">
+                <i class="ti ti-player-play" id="playIcon" aria-hidden="true"></i>
+            </button>
+
+            <div class="speed-row">
+                <button type="button" class="speed-icon" data-tip="Speed / Velocidad" aria-label="Speed">
+                    <i class="ti ti-gauge" aria-hidden="true"></i>
+                </button>
+                <span class="speed-end">0.5x</span>
+                <input type="range" id="speedRange" min="0.5" max="2.0" step="0.1" value="1.0" aria-label="Speed">
+                <span class="speed-end">2.0x</span>
+                <span id="speedDisplay" class="speed-now">1.0x</span>
+            </div>
+        </div>
+
+        <div id="modalBody" class="ruby-text"></div>
+    </div>
+</div>
+
+<!-- ===== How to use ポップアップ ===== -->
+<div id="helpModal" class="modal" role="dialog" aria-modal="true" aria-label="How to use">
+    <div class="modal-content">
+        <button type="button" class="close-btn" id="helpClose" aria-label="Close">
+            <i class="ti ti-x" aria-hidden="true"></i>
+        </button>
+
+        <div class="tabs" role="tablist">
+            <button type="button" class="tab" id="tabEn" role="tab" aria-selected="true">English</button>
+            <button type="button" class="tab" id="tabEs" role="tab" aria-selected="false">Español</button>
+        </div>
+
+        <!-- English -->
+        <div id="helpEn" role="tabpanel">
+            <h2 class="help-title">Welcome!</h2>
+            <p>NIHONGO KEIZOKU is a site where you can read articles about Japanese culture and society in easy Japanese. Try using each article in these 5 steps.</p>
+            <ol class="steps">
+                <li><strong>Choose an article you're interested in</strong> <span class="chip"><i class="ti ti-pointer" aria-hidden="true"></i></span><br>Start with the topic that interests you most.</li>
+                <li><strong>Listen</strong><br>Press <span class="chip"><i class="ti ti-player-play" aria-hidden="true"></i></span> and listen to the audio. If it's difficult, slow down with <span class="chip"><i class="ti ti-gauge" aria-hidden="true"></i></span>.</li>
+                <li><strong>Listen + Read</strong><br>Listen while reading the text. Turn furigana off with <span class="chip"><ruby>字<rt>じ</rt></ruby></span> if you don't need it. If you don't understand something, tap <span class="chip"><i class="ti ti-language" aria-hidden="true"></i></span> for the English and Spanish translations, and <span class="chip"><i class="ti ti-book" aria-hidden="true"></i></span> for the meaning of words.</li>
+                <li><strong>Listen without looking</strong> <span class="chip"><i class="ti ti-eye-off" aria-hidden="true"></i></span><br>Listen once more without looking at the text or the translation. You don't need to catch every word. If you understand the meaning, that's great!</li>
+                <li><strong>Shadowing</strong> <span class="chip"><i class="ti ti-microphone" aria-hidden="true"></i></span><br>Repeat out loud right after the audio, following along as you hear it.</li>
+            </ol>
+            <p class="keep-going"><ruby>継続<rt>けいぞく</rt></ruby>は<ruby>力<rt>ちから</rt></ruby>なり！<br><span>Consistency is key!</span></p>
+            <p class="small-note">Free articles are open to everyone. Members-only articles can be read after you log in.</p>
+        </div>
+
+        <!-- Español -->
+        <div id="helpEs" role="tabpanel" hidden>
+            <h2 class="help-title">¡Te damos la bienvenida!</h2>
+            <p>NIHONGO KEIZOKU es un sitio donde puedes leer artículos sobre la cultura y la sociedad de Japón en japonés sencillo. Prueba a usar cada artículo con estos 5 pasos.</p>
+            <ol class="steps">
+                <li><strong>Elige un artículo que te interese</strong> <span class="chip"><i class="ti ti-pointer" aria-hidden="true"></i></span><br>Empieza por el tema que más te llame la atención.</li>
+                <li><strong>Escucha</strong><br>Pulsa <span class="chip"><i class="ti ti-player-play" aria-hidden="true"></i></span> y escucha el audio. Si te resulta difícil, baja la velocidad con <span class="chip"><i class="ti ti-gauge" aria-hidden="true"></i></span>.</li>
+                <li><strong>Escucha + lee</strong><br>Escucha mientras lees el texto. Si no necesitas el furigana, desactívalo con <span class="chip"><ruby>字<rt>じ</rt></ruby></span>. Si no entiendes algo, toca <span class="chip"><i class="ti ti-language" aria-hidden="true"></i></span> para ver las traducciones al inglés y al español, y <span class="chip"><i class="ti ti-book" aria-hidden="true"></i></span> para ver el significado de las palabras.</li>
+                <li><strong>Escucha sin mirar nada</strong> <span class="chip"><i class="ti ti-eye-off" aria-hidden="true"></i></span><br>Escucha otra vez sin mirar el texto ni la traducción. No hace falta entender todas las palabras. Si entiendes el significado, ¡está muy bien!</li>
+                <li><strong>Imita (shadowing)</strong> <span class="chip"><i class="ti ti-microphone" aria-hidden="true"></i></span><br>Repite en voz alta justo después del audio, mientras lo escuchas.</li>
+            </ol>
+            <p class="keep-going"><ruby>継続<rt>けいぞく</rt></ruby>は<ruby>力<rt>ちから</rt></ruby>なり！<br><span>¡La constancia es la clave!</span></p>
+            <p class="small-note">Los artículos gratuitos están abiertos a todos. Los artículos exclusivos para miembros se pueden leer después de iniciar sesión.</p>
+        </div>
+    </div>
+</div>
+
+<!-- ===== 翻訳ウィンドウ ===== -->
+<div id="translateWindow" class="sub-window" role="dialog" aria-modal="true" aria-label="Translate">
+    <div class="sub-window-content">
+        <button type="button" class="close-btn small" id="translateClose" aria-label="Close">
+            <i class="ti ti-x" aria-hidden="true"></i>
+        </button>
+        <h3 class="sub-title"><i class="ti ti-language" aria-hidden="true"></i> English / Español</h3>
+        <p id="translateText" class="sub-text"></p>
+    </div>
+</div>
+
+<!-- ===== 語彙ウィンドウ ===== -->
+<div id="vocabWindow" class="sub-window" role="dialog" aria-modal="true" aria-label="Vocabulary">
+    <div class="sub-window-content">
+        <button type="button" class="close-btn small" id="vocabClose" aria-label="Close">
+            <i class="ti ti-x" aria-hidden="true"></i>
+        </button>
+        <h3 class="sub-title"><i class="ti ti-book" aria-hidden="true"></i> Vocabulary / Vocabulario</h3>
+        <ul id="vocabList" class="vocab-list"></ul>
+    </div>
+</div>
+
+<!-- ===== タップで出るラベル ===== -->
+<div id="tip" role="status" aria-live="polite"></div>
 
 <script src="js/app.js"></script>
 </body>

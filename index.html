@@ -2,54 +2,164 @@
 <html lang="ja">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NIHONGO KEIZOKU</title>
-    <!-- CSS読み込み -->
-    <link rel="stylesheet" href="css/style.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>NIHONGO KEIZOKU - Listening, Reading & Shadowing 5 mins a day</title>
+    <meta name="description" content="Listening, Reading & Shadowing. 5 mins a day. 毎日5分の日本語学習。">
+
+    <!-- OGP (公開時にURLと画像を差し替え) -->
+    <meta property="og:title" content="NIHONGO KEIZOKU">
+    <meta property="og:description" content="Listening, Reading & Shadowing - 5 mins a day">
+    <meta property="og:type" content="website">
+    <!-- <meta property="og:image" content="https://your-domain.example/ogp.png"> -->
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bungee+Inline&family=M+PLUS+Rounded+1c:wght@400;700&family=Zen+Maru+Gothic:wght@900&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --primary: #4f46e5;
+            --primary-hover: #4338ca;
+            --bg: #ffffff;
+            --text: #1e293b;
+            --muted: #64748b;
+        }
+
+        * { box-sizing: border-box; }
+
+        html, body {
+            height: 100%;
+            margin: 0;
+        }
+
+        body {
+            font-family: 'M PLUS Rounded 1c', 'Hiragino Maru Gothic ProN', 'Yu Gothic', sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            overflow: hidden;
+        }
+
+        /* ===== Home View ===== */
+        #homeView {
+            position: fixed;
+            inset: 0;
+            padding: env(safe-area-inset-top, 0px) 20px env(safe-area-inset-bottom, 0px);
+            background: var(--bg);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            transition: opacity 0.5s ease, visibility 0.5s;
+        }
+        #homeView.is-leaving {
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+        }
+
+        .home-title {
+            font-family: 'Bungee Inline', 'Impact', cursive;
+            font-weight: 400;
+            font-size: clamp(2.8rem, 13vw, 4.5rem);
+            color: #000;
+            margin: 0;
+            line-height: 1.1;
+            letter-spacing: 0.02em;
+            text-transform: uppercase;
+            text-align: center;
+        }
+
+        .home-subtitle {
+            font-family: 'Zen Maru Gothic', 'M PLUS Rounded 1c', sans-serif;
+            color: var(--muted);
+            margin: 15px 0 70px;
+            letter-spacing: 0.05em;
+            text-align: center;
+            line-height: 1.5;
+        }
+        .home-subtitle .lead {
+            display: block;
+            font-weight: 900;
+            font-size: 1.1rem;
+            color: #000;
+        }
+        .home-subtitle .sub {
+            display: block;
+            font-weight: 400;
+            font-size: 0.95rem;
+        }
+
+        .start-btn {
+            font-family: 'Zen Maru Gothic', 'M PLUS Rounded 1c', sans-serif;
+            font-weight: 900;
+            font-size: 1.5rem;
+            background: var(--primary);
+            color: #fff;
+            border: none;
+            padding: 15px 50px;
+            border-radius: 9999px;
+            cursor: pointer;
+            box-shadow: 0 8px 20px rgba(79, 70, 229, 0.3);
+            transition: transform 0.3s ease, background 0.3s ease, box-shadow 0.3s ease;
+            -webkit-tap-highlight-color: transparent;
+        }
+        .start-btn:hover {
+            transform: translateY(-4px);
+            background: var(--primary-hover);
+            box-shadow: 0 12px 28px rgba(79, 70, 229, 0.45);
+        }
+        .start-btn:active { transform: translateY(-1px); }
+        .start-btn:focus-visible {
+            outline: 3px solid var(--primary);
+            outline-offset: 4px;
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            #homeView, .start-btn { transition: none; }
+            .start-btn:hover { transform: none; }
+        }
+    </style>
 </head>
 <body>
 
-    <!-- 1. メイン画面（トップ画面） -->
-    <div id="homeView">
-        <h1 class="logo">NIHONGO<br>KEIZOKU</h1>
-        <p class="subtitle">Listening, Reading &amp; Shadowing<br><span class="sub-time">5 mins a day</span></p>
-        <button class="start-btn" id="startBtn">START</button>
-    </div>
+<main id="homeView">
+    <h1 class="home-title">NIHONGO<br>KEIZOKU</h1>
+    <p class="home-subtitle">
+        <span class="lead">Listening, Reading &amp; Shadowing</span>
+        <span class="sub">5 mins a day</span>
+    </p>
+    <button type="button" class="start-btn" id="startBtn">START</button>
+</main>
 
-    <!-- 2. コンテンツ画面（学習画面） -->
-    <div id="contentView">
-        <header>
-            <h1 class="logo">NIHONGO KEIZOKU</h1>
-            <p class="subtitle">Listening, Reading &amp; Shadowing — 5 mins a day</p>
-            <div class="controls">
-                <button class="btn btn-secondary" id="howToBtn">How to use / Cómo usar</button>
-            </div>
-        </header>
+<script>
+    /*
+     * START を押した後の動作
+     *  - NEXT_URL に記事一覧ページのURLを入れると、フェードアウト後にそのページへ移動
+     *  - 空文字 '' のままなら、画面を閉じて "keizoku:start" イベントを発火
+     *    （一覧画面を同じHTMLに組み込む場合に使う）
+     */
+    const NEXT_URL = '';          // 例: 'articles.html'
+    const FADE_MS  = 500;
 
-        <main>
-            <h2 class="section-title">Open Access / Acceso Abierto</h2>
-            <div class="articles-grid" id="openArticles">
-                <!-- JSで記事カードが読み込まれます -->
-            </div>
+    const homeView = document.getElementById('homeView');
+    const startBtn = document.getElementById('startBtn');
 
-            <h2 class="section-title" style="margin-top: 40px;">Members Only / Solo para miembros</h2>
-            <div class="articles-grid" id="memberArticles">
-                <!-- JSで記事カードが読み込まれます -->
-            </div>
-        </main>
-    </div>
+    function startApp() {
+        startBtn.disabled = true;
+        homeView.classList.add('is-leaving');
 
-    <!-- 3. モーダル画面（言語選択・使い方・記事表示用） -->
-    <div class="modal" id="modal">
-        <div class="modal-content">
-            <button class="close-btn" id="closeModal">&times;</button>
-            <div id="modalBody">
-                <!-- 動的にコンテンツが挿入されます -->
-            </div>
-        </div>
-    </div>
+        setTimeout(() => {
+            if (NEXT_URL) {
+                window.location.href = NEXT_URL;
+            } else {
+                document.body.style.overflow = '';
+                window.dispatchEvent(new CustomEvent('keizoku:start'));
+            }
+        }, FADE_MS);
+    }
 
-    <script src="js/data.js"></script>
-    <script src="js/app.js"></script>
+    startBtn.addEventListener('click', startApp);
+</script>
 </body>
 </html>

@@ -1,166 +1,136 @@
-let isLoggedIn = false;
-let currentArt = null;
-let freeArticles = [];
-let premiumArticles = [];
+/* =========================================================
+   NIHONGO KEIZOKU  app.js
+   ========================================================= */
 
-// サイト起動時にJSONデータを読み込む
+const FADE_MS = 500;
+let isLoggedIn = false;   // 仮のログイン状態（後で本物に置き換える）
+let articles = [];
+
+const homeView    = document.getElementById('homeView');
+const startBtn    = document.getElementById('startBtn');
+const contentView = document.getElementById('contentView');
+const freeGrid    = document.getElementById('freeGrid');
+const premiumGrid = document.getElementById('premiumGrid');
+const loginBtn    = document.getElementById('loginBtn');
+
+/* ---------- 入口画面 → コンテンツ画面 ---------- */
+function startApp() {
+    startBtn.disabled = true;
+    homeView.classList.add('is-leaving');
+    setTimeout(() => {
+        window.dispatchEvent(new CustomEvent('keizoku:start'));
+    }, FADE_MS);
+}
+startBtn.addEventListener('click', startApp);
+
+window.addEventListener('keizoku:start', () => {
+    document.body.classList.add('is-started');
+    contentView.classList.add('is-visible');
+    setTimeout(() => contentView.classList.add('is-shown'), 50);
+});
+
+/* ---------- 記事データの読み込み ---------- */
 async function loadArticles() {
     try {
-        const response = await fetch('data/articles.json');
-        if (!response.ok) throw new Error('JSONファイルの読み込みに失敗しました');
-        const data = await response.json();
-        
-        freeArticles = data.free || [];
-        premiumArticles = (data.premium || []).map((item) => ({
-            title: item.title,
-            plainTitle: item.plainTitle,
-            img: item.img,
-            content: "This is exclusive content for members.<br>Este es contenido exclusivo para miembros.",
-            plain: "会員限定の特別なコンテンツです。",
-            translation: "Members Only",
-            vocab: []
-        }));
-        
+        const res = await fetch('data/articles.json');
+        if (!res.ok) throw new Error('HTTP ' + res.status);
+        const data = await res.json();
+        articles = data.map(normalizeArticle);
         render();
-    } catch (error) {
-        console.error("エラー詳細:", error);
+    } catch (err) {
+        console.error('articles.json の読み込みに失敗:', err);
+        const msg = '<div class="placeholder">記事を読み込めませんでした。<br>Live Server で開いているか確認してください。</div>';
+        freeGrid.innerHTML = msg;
+        premiumGrid.innerHTML = '';
     }
 }
 
-function startApp() {
-    const homeView = document.getElementById('homeView');
-    const contentView = document.getElementById('contentView');
-    if (homeView && contentView) {
-        homeView.style.opacity = '0';
-        homeView.style.visibility = 'hidden';
-        contentView.style.display = 'block';
-        setTimeout(() => { contentView.style.opacity = '1'; }, 50);
-    }
-}
-
-function render() {
-    const freeGrid = document.getElementById('freeGrid');
-    const premiumGrid = document.getElementById('premiumGrid');
-    if (!freeGrid || !premiumGrid) return;
-    freeGrid.innerHTML = ''; premiumGrid.innerHTML = '';
-    freeArticles.forEach((art, i) => freeGrid.appendChild(createCard(art, false, i)));
-    premiumArticles.forEach((art, i) => premiumGrid.appendChild(createCard(art, true, i)));
-}
-
-function createCard(art, isLocked, index) {
-    const card = document.createElement('div');
-    card.className = "card";
-    card.innerHTML = `
-        <div class="card-img-wrapper"><img src="${art.img}" alt="${art.plainTitle}"></div>
-        <div style="padding:15px 20px;">
-            <h3 style="margin:0; font-size: 1.2rem; line-height: 1.5; color: var(--text);">${art.title}</h3>
-            ${isLocked && !isLoggedIn ? '<div style="margin-top:12px; font-size:0.75rem; font-weight:bold; color:var(--primary); background:#e0e7ff; padding:4px 8px; border-radius:8px; display:inline-block;">🔒 Members Only / Solo miembros</div>' : ''}
-        </div>`;
-    card.onclick = () => {
-        if(isLocked && !isLoggedIn) alert("This article requires login.\nEste artículo requiere iniciar sesión.");
-        else openModal(art);
+/* JSONに書かれていない項目に、初期値を入れる */
+function normalizeArticle(a) {
+    const isPremium = a.access === 'premium';
+    return {
+        id: a.id,
+        access: a.access || 'free',
+        title: a.title || '',
+        plainTitle: a.plainTitle || '',
+        img: a.img || '',
+        audioUrl: a.audioUrl || '',
+        content: a.content || (isPremium
+            ? 'This is exclusive content for members.<br>Este es contenido exclusivo para miembros.'
+            : '<ruby>準備中<rt>じゅんびちゅう</rt></ruby>です。'),
+        plain: a.plain || (isPremium ? '会員限定の特別なコンテンツです。' : '準備中です。'),
+        translation: a.translation || (isPremium ? 'Members Only' : 'Coming soon.'),
+        vocab: a.vocab || []
     };
+}
+
+/* ---------- 表示 ---------- */
+function render() {
+    freeGrid.innerHTML = '';
+    premiumGrid.innerHTML = '';
+
+    articles.forEach(art => {
+        const isLocked = art.access === 'premium';
+        const card = createCard(art, isLocked);
+        (isLocked ? premiumGrid : freeGrid).appendChild(card);
+    });
+}
+
+function createCard(art, isLocked) {
+    const card = document.createElement('div');
+    card.className = 'card';
+    card.tabIndex = 0;
+    card.setAttribute('role', 'button');
+
+    // 画像（なければ・読み込めなければ、背景色だけにする）
+    const imgWrap = document.createElement('div');
+    imgWrap.className = 'card-img-wrapper';
+    if (art.img) {
+        const img = document.createElement('img');
+        img.src = art.img;
+        img.alt = art.plainTitle;
+        img.loading = 'lazy';
+        img.onerror = () => img.remove();
+        imgWrap.appendChild(img);
+    }
+
+    // タイトルと鍵バッジ
+    const body = document.createElement('div');
+    body.className = 'card-body';
+    body.innerHTML = `<h3 class="card-title">${art.title}</h3>`;
+    if (isLocked && !isLoggedIn) {
+        body.insertAdjacentHTML('beforeend',
+            '<div class="lock-badge">🔒 Members Only / Solo miembros</div>');
+    }
+
+    card.appendChild(imgWrap);
+    card.appendChild(body);
+
+    card.addEventListener('click', () => onCardClick(art, isLocked));
+    card.addEventListener('keydown', e => {
+        if (e.key === 'Enter' || e.key === ' ') {
+            e.preventDefault();
+            onCardClick(art, isLocked);
+        }
+    });
     return card;
 }
 
-function openModal(art) {
-    currentArt = art;
-    document.getElementById('modalTitle').innerHTML = art.title;
-    document.getElementById('modalBody').innerHTML = art.content;
-    
-    document.getElementById('rubyToggle').checked = true;
-    document.getElementById('modalTitle').classList.remove('hide-ruby');
-    document.getElementById('modalBody').classList.remove('hide-ruby');
-    
-    document.getElementById('modal').style.display = 'flex';
-    
-    const audioEl = document.getElementById('articleAudio');
-    if (art.audioUrl) {
-        audioEl.src = art.audioUrl;
-    } else {
-         audioEl.src = "";
+function onCardClick(art, isLocked) {
+    if (isLocked && !isLoggedIn) {
+        alert('This article requires login.\nEste artículo requiere iniciar sesión.');
+        return;
     }
+    // 記事モーダルは次のステップで作ります（今は仮の表示）
+    alert('「' + art.plainTitle + '」のモーダルは次のステップで作ります。');
 }
 
-function openHelp() {
-    document.getElementById('helpModal').style.display = 'flex';
-}
-
-function toggleRuby(checkbox) {
-    const modalBody = document.getElementById('modalBody');
-    const modalTitle = document.getElementById('modalTitle');
-    if (checkbox.checked) {
-        modalBody.classList.remove('hide-ruby');
-        modalTitle.classList.remove('hide-ruby');
-    } else {
-        modalBody.classList.add('hide-ruby');
-        modalTitle.classList.add('hide-ruby');
-    }
-}
-
-function openSubWindow(type) {
-    if (type === 'english') {
-        document.getElementById('englishText').innerHTML = currentArt.translation;
-        document.getElementById('englishWindow').style.display = 'flex';
-    } else if (type === 'vocabulary') {
-        document.getElementById('vocabList').innerHTML = currentArt.vocab.map(v => `<li>${v}</li>`).join('');
-        document.getElementById('vocabWindow').style.display = 'flex';
-    }
-}
-
-function closeSubWindow(type) {
-    if (type === 'english') document.getElementById('englishWindow').style.display = 'none';
-    if (type === 'vocabulary') document.getElementById('vocabWindow').style.display = 'none';
-}
-
-function closeModal(modalId) { 
-    document.getElementById(modalId).style.display = 'none'; 
-    if(modalId === 'modal') {
-        const audioEl = document.getElementById('articleAudio');
-        audioEl.pause();
-        audioEl.currentTime = 0;
-        speechSynthesis.cancel(); 
-        closeSubWindow('english');
-        closeSubWindow('vocabulary');
-    }
-}
-
-document.getElementById('playBtn').onclick = () => {
-    const audioEl = document.getElementById('articleAudio');
-    
-    if (currentArt && currentArt.audioUrl && currentArt.audioUrl !== "") {
-        audioEl.playbackRate = document.getElementById('speedRange').value;
-        if (audioEl.paused) {
-             audioEl.play().catch(e => console.error("Error playing audio:", e));
-        } else {
-             audioEl.pause();
-             audioEl.currentTime = 0;
-             audioEl.play().catch(e => console.error("Error playing audio:", e));
-        }
-    } else if (currentArt) {
-        speechSynthesis.cancel();
-        const ut = new SpeechSynthesisUtterance(currentArt.plain);
-        ut.rate = document.getElementById('speedRange').value;
-        ut.lang = 'ja-JP';
-        speechSynthesis.speak(ut);
-    }
-};
-
-document.getElementById('speedRange').oninput = (e) => {
-    const speed = e.target.value;
-    document.getElementById('speedDisplay').textContent = speed + "x";
-    
-    const audioEl = document.getElementById('articleAudio');
-    if(audioEl) {
-         audioEl.playbackRate = speed;
-    }
-};
-
-document.getElementById('loginBtn').onclick = (e) => {
+/* ---------- 仮のログイン切り替え ---------- */
+loginBtn.addEventListener('click', () => {
     isLoggedIn = !isLoggedIn;
-    e.target.textContent = isLoggedIn ? "Logout" : "Login";
+    loginBtn.textContent = isLoggedIn ? 'Logout' : 'Login';
     render();
-};
+});
 
-// データの読み込みを実行
+/* ---------- 開始 ---------- */
 loadArticles();

@@ -1,41 +1,55 @@
-{
-  "free": [
-    {
-      "title": "コンビニのおにぎり",
-      "plainTitle": "コンビニのおにぎり",
-      "img": "https://images.unsplash.com/photo-1584622650111-993a426fbf0a?w=500&auto=format&fit=crop",
-      "audioUrl": "",
-      "content": "<ruby>日本<rt>にほん</rt></ruby>に<ruby>行<rt>い</rt></ruby>ったら、ぜひコンビニのおにぎりを<ruby>食<rt>た</rt></ruby>べてみてください。<br><br><ruby>種類<rt>しゅるい</rt></ruby>がとても<ruby>多<rt>おお</rt></ruby>いので、<ruby>選<rt>えら</rt></ruby>ぶのが<ruby>楽<rt>たの</rt></ruby>しいです。<ruby>昔<rt>むかし</rt></ruby>から<ruby>人気<rt>にんき</rt></ruby>があるのは、<ruby>梅干<rt>うめぼし</rt></ruby>、<ruby>鮭<rt>さけ</rt></ruby>、ツナマヨなどです。",
-      "plain": "日本に行ったら、ぜひコンビニのおにぎりを食べてみてください。種類がとても多いので、選ぶのが楽しいです。昔から人気があるのは、梅干、鮭、ツナマヨなどです。",
-      "translation": "<b>[English]</b><br>If you go to Japan, please try the convenience store onigiri. Since there are so many varieties, it is fun to choose.<br><br><b>[Español]</b><br>Si vas a Japón, por favor prueba el onigiri de las tiendas de conveniencia. Como hay muchísimas variedades, es divertido elegir.",
-      "vocab": [
-        "種類（しゅるい）: Variety / Variedad",
-        "人気（にんき）: Popularity / Popularidad",
-        "梅干（うめぼし）: Pickled plum / Ciruela encurtida",
-        "鮭（さけ）: Salmon / Salmón"
-      ]
-    },
-    {
-      "title": "ウォッシュレット",
-      "plainTitle": "ウォッシュレット",
-      "img": "https://images.unsplash.com/photo-1542171249-14e3b1c67d71?w=500&auto=format&fit=crop",
-      "audioUrl": "",
-      "content": "<ruby>準備中<rt>じゅんびちゅう</rt></ruby>です。",
-      "plain": "準備中です。",
-      "translation": "Coming soon.",
-      "vocab": []
-    }
-  ],
-  "premium": [
-    {
-      "title": "<ruby>駅弁<rt>えきべん</rt></ruby>",
-      "plainTitle": "駅弁",
-      "img": "https://images.unsplash.com/photo-1524413840807-0c3cb6fa808d?w=500&auto=format&fit=crop"
-    },
-    {
-      "title": "<ruby>居酒屋<rt>いざかや</rt></ruby><ruby>文化<rt>ぶんか</rt></ruby><ruby>全般<rt>ぜんぱん</rt></ruby>",
-      "plainTitle": "居酒屋文化全般",
-      "img": "https://images.unsplash.com/photo-1552604617-64b5bc08b292?w=500&auto=format&fit=crop"
-    }
-  ]
-}
+[
+  {
+    "id": "onigiri",
+    "access": "free",
+    "title": "コンビニのおにぎり",
+    "plainTitle": "コンビニのおにぎり",
+    "img": "assets/images/onigiri.png",
+    "audioUrl": "",
+    "content": "<ruby>日本<rt>にほん</rt></ruby>に<ruby>行<rt>い</rt></ruby>ったら、ぜひコンビニのおにぎりを<ruby>食<rt>た</rt></ruby>べてみてください。<br><br><ruby>種類<rt>しゅるい</rt></ruby>がとても<ruby>多<rt>おお</rt></ruby>いので、<ruby>選<rt>えら</rt></ruby>ぶのが<ruby>楽<rt>たの</rt></ruby>しいです。<ruby>昔<rt>むかし</rt></ruby>から<ruby>人気<rt>にんき</rt></ruby>があるのは、<ruby>梅干<rt>うめぼし</rt></ruby>、<ruby>鮭<rt>さけ</rt></ruby>、ツナマヨなどです。<ruby>最近<rt>さいきん</rt></ruby>は<ruby>海老<rt>えび</rt></ruby>の<ruby>天<rt>てん</rt></ruby>ぷらのような<ruby>高級<rt>こうきゅう</rt></ruby>な<ruby>具<rt>ぐ</rt></ruby>や、ローストビーフのような<ruby>洋風<rt>ようふう</rt></ruby>のおにぎりもあります。また、<ruby>有名<rt>ゆうめい</rt></ruby>なお<ruby>店<rt>みせ</rt></ruby>とコラボレーションをしたり、<ruby>季節限定<rt>きせつげんてい</rt></ruby>のおにぎりも<ruby>人気<rt>にんき</rt></ruby>です。<ruby>他<rt>ほか</rt></ruby>にも、<ruby>手巻<rt>てま</rt></ruby>き<ruby>寿司<rt>ずし</rt></ruby>やオムライスもあります。<br><br>おにぎりの<ruby>袋<rt>ふくろ</rt></ruby>にも<ruby>特徴<rt>とくちょう</rt></ruby>があります。<ruby>海苔<rt>のり</rt></ruby>とご<ruby>飯<rt>はん</rt></ruby>が<ruby>混<rt>ま</rt></ruby>ざらないので、いつでも<ruby>海苔<rt>のり</rt></ruby>がパリパリのままです。これは<ruby>日本<rt>にほん</rt></ruby>の<ruby>面白<rt>おもしろ</rt></ruby>い<ruby>工夫<rt>くふう</rt></ruby>です。ぜひ<ruby>自分<rt>じぶん</rt></ruby>の<ruby>好<rt>す</rt></ruby>きなおにぎりを<ruby>見<rt>み</rt></ruby>つけてください。",
+    "plain": "日本に行ったら、ぜひコンビニのおにぎりを食べてみてください。種類がとても多いので、選ぶのが楽しいです。昔から人気があるのは、梅干、鮭、ツナマヨなどです。最近は海老の天ぷらのような高級な具や、ローストビーフのような洋風のおにぎりもあります。また、有名なお店とコラボレーションをしたり、季節限定のおにぎりも人気です。他にも、手巻き寿司やオムライスもあります。おにぎりの袋にも特徴があります。海苔とご飯が混ざらないので、いつでも海苔がパリパリのままです。これは日本の面白い工夫です。ぜひ自分の好きなおにぎりを見つけてください。",
+    "translation": "<b>[English]</b><br>If you go to Japan, please try the convenience store onigiri. Since there are so many varieties, it is fun to choose. Traditionally popular ones include pickled plum, salmon, and tuna mayo. Recently, there are premium fillings like shrimp tempura and Western-style onigiri like roast beef. Also, collaborations with famous shops and seasonal limited onigiri are popular. Besides those, there are hand-rolled sushi and omurice.<br>Also, the onigiri bag has a special feature. Since the seaweed and rice do not mix, the seaweed always stays crispy. This is an interesting Japanese ingenuity. Please find your favorite onigiri.<br><br><b>[Español]</b><br>Si vas a Japón, por favor prueba el onigiri de las tiendas de conveniencia. Como hay muchísimas variedades, es divertido elegir. Los tradicionalmente populares incluyen ciruela encurtida, salmón y atún con mayonesa. Recientemente, hay rellenos premium como tempura de camarón y onigiris de estilo occidental como roast beef. Además, las colaboraciones con tiendas famosas y los onigiri exclusivos de temporada son populares. Además de esos, hay sushi enrollado a mano y omurice.<br>También, la bolsa del onigiri tiene una característica especial. Como el alga y el arroz no se mezclan, el alga siempre se mantiene crujiente. Este es un invento japonés interesante. Por favor, encuentra tu onigiri favorito.",
+    "vocab": [
+      "種類（しゅるい）: Variety / Variedad",
+      "ツナマヨ: Tuna with mayonnaise / Atún con mayonesa",
+      "海老の天ぷら（えびのてんぷら）: Shrimp tempura / Tempura de camarón",
+      "高級（こうきゅう）: Premium / De alta gama",
+      "具（ぐ）: Filling / Relleno",
+      "ローストビーフ: Roast beef / Roast beef",
+      "洋風（ようふう）: Western-style / De estilo occidental",
+      "コラボレーション: Collaboration / Colaboración",
+      "季節限定（きせつげんてい）: Seasonal limited / Exclusivo de temporada",
+      "手巻き寿司（てまきずし）: Hand-rolled sushi / Sushi enrollado a mano",
+      "オムライス: Omurice / Omurice",
+      "袋（ふくろ）: Bag / Bolsa",
+      "特徴（とくちょう）: Feature / Característica",
+      "パリパリ: Crispy / Crujiente",
+      "工夫（くふう）: Ingenuity / Invento"
+    ]
+  },
+  { "id": "washlet",   "access": "free", "title": "ウォッシュレット", "plainTitle": "ウォッシュレット", "img": "" },
+  { "id": "sento",     "access": "free", "title": "<ruby>銭湯<rt>せんとう</rt></ruby><ruby>文化<rt>ぶんか</rt></ruby>", "plainTitle": "銭湯文化", "img": "" },
+  { "id": "citypop",   "access": "free", "title": "シティポップ", "plainTitle": "シティポップ", "img": "" },
+  { "id": "ukiyoe",    "access": "free", "title": "<ruby>浮世絵<rt>うきよえ</rt></ruby>", "plainTitle": "浮世絵", "img": "" },
+  { "id": "sushi",     "access": "free", "title": "お<ruby>寿司<rt>すし</rt></ruby>", "plainTitle": "お寿司", "img": "" },
+
+  { "id": "ekiben",    "access": "premium", "title": "<ruby>駅弁<rt>えきべん</rt></ruby>", "plainTitle": "駅弁", "img": "" },
+  { "id": "izakaya",   "access": "premium", "title": "<ruby>居酒屋<rt>いざかや</rt></ruby><ruby>文化<rt>ぶんか</rt></ruby><ruby>全般<rt>ぜんぱん</rt></ruby>", "plainTitle": "居酒屋文化全般", "img": "" },
+  { "id": "hassha",    "access": "premium", "title": "<ruby>電車<rt>でんしゃ</rt></ruby>の<ruby>発車<rt>はっしゃ</rt></ruby>メロディ", "plainTitle": "電車の発車メロディ", "img": "" },
+  { "id": "100yen",    "access": "premium", "title": "100<ruby>円<rt>えん</rt></ruby>ショップ", "plainTitle": "100円ショップ", "img": "" },
+  { "id": "school",    "access": "premium", "title": "<ruby>日本<rt>にほん</rt></ruby>の<ruby>学校<rt>がっこう</rt></ruby><ruby>制度<rt>せいど</rt></ruby>", "plainTitle": "日本の学校制度", "img": "" },
+  { "id": "gacha",     "access": "premium", "title": "ガチャガチャ", "plainTitle": "ガチャガチャ", "img": "" },
+  { "id": "concafe",   "access": "premium", "title": "コンセプトカフェ", "plainTitle": "コンセプトカフェ", "img": "" },
+  { "id": "karaoke",   "access": "premium", "title": "カラオケ", "plainTitle": "カラオケ", "img": "" },
+  { "id": "pachinko",  "access": "premium", "title": "パチンコ", "plainTitle": "パチンコ", "img": "" },
+  { "id": "jinja",     "access": "premium", "title": "<ruby>神社<rt>じんじゃ</rt></ruby>", "plainTitle": "神社", "img": "" },
+  { "id": "onsen",     "access": "premium", "title": "<ruby>温泉<rt>おんせん</rt></ruby>の<ruby>入<rt>はい</rt></ruby>り<ruby>方<rt>かた</rt></ruby>・<ruby>作法<rt>さほう</rt></ruby>", "plainTitle": "温泉の入り方・作法", "img": "" },
+  { "id": "yokai",     "access": "premium", "title": "<ruby>妖怪<rt>ようかい</rt></ruby>", "plainTitle": "妖怪", "img": "" },
+  { "id": "rakugo",    "access": "premium", "title": "<ruby>落語<rt>らくご</rt></ruby>", "plainTitle": "落語", "img": "" },
+  { "id": "capsule",   "access": "premium", "title": "カプセルホテル", "plainTitle": "カプセルホテル", "img": "" },
+  { "id": "butsuzo",   "access": "premium", "title": "<ruby>仏像<rt>ぶつぞう</rt></ruby>", "plainTitle": "仏像", "img": "" },
+  { "id": "genji",     "access": "premium", "title": "<ruby>源氏<rt>げんじ</rt></ruby><ruby>物語<rt>ものがたり</rt></ruby>", "plainTitle": "源氏物語", "img": "" },
+  { "id": "nintendo",  "access": "premium", "title": "<ruby>任天堂<rt>にんてんどう</rt></ruby>とゲーム", "plainTitle": "任天堂とゲーム", "img": "" },
+  { "id": "bonsai",    "access": "premium", "title": "<ruby>盆栽<rt>ぼんさい</rt></ruby>", "plainTitle": "盆栽", "img": "" },
+  { "id": "curry",     "access": "premium", "title": "カレーライス", "plainTitle": "カレーライス", "img": "" }
+]

@@ -10,7 +10,6 @@
     <meta property="og:title" content="NIHONGO KEIZOKU">
     <meta property="og:description" content="Listening, Reading & Shadowing - 5 mins a day">
     <meta property="og:type" content="website">
-    <!-- <meta property="og:image" content="https://your-domain.example/ogp.png"> -->
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -20,7 +19,8 @@
         :root {
             --primary: #4f46e5;
             --primary-hover: #4338ca;
-            --bg: #ffffff;
+            --bg: #f8fafc;
+            --surface: #ffffff;
             --text: #1e293b;
             --muted: #64748b;
         }
@@ -28,7 +28,7 @@
         * { box-sizing: border-box; }
 
         html, body {
-            height: 100%;
+            min-height: 100%;
             margin: 0;
         }
 
@@ -36,15 +36,18 @@
             font-family: 'M PLUS Rounded 1c', 'Hiragino Maru Gothic ProN', 'Yu Gothic', sans-serif;
             background: var(--bg);
             color: var(--text);
-            overflow: hidden;
+            overflow: hidden;          /* 入口画面の間はスクロールさせない */
+        }
+        body.is-started {
+            overflow: auto;            /* START後はスクロールOK */
         }
 
-        /* ===== Home View ===== */
+        /* ===== 入口画面 (Home View) ===== */
         #homeView {
             position: fixed;
             inset: 0;
             padding: env(safe-area-inset-top, 0px) 20px env(safe-area-inset-bottom, 0px);
-            background: var(--bg);
+            background: #ffffff;
             display: flex;
             flex-direction: column;
             justify-content: center;
@@ -115,51 +118,188 @@
             outline-offset: 4px;
         }
 
+        /* ===== コンテンツ画面 (Content View) ===== */
+        #contentView {
+            display: none;
+            opacity: 0;
+            transition: opacity 0.5s ease;
+        }
+        #contentView.is-visible {
+            display: block;
+        }
+        #contentView.is-shown {
+            opacity: 1;
+        }
+
+        header {
+            padding: 15px 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(10px);
+            position: sticky;
+            top: 0;
+            z-index: 50;
+            border-bottom: 1px solid #e2e8f0;
+        }
+        .logo-wrapper { display: flex; flex-direction: column; }
+        .logo {
+            font-family: 'Bungee Inline', 'Impact', cursive;
+            font-size: 1.5rem;
+            color: #000;
+            line-height: 1.2;
+        }
+        .logo-sub {
+            font-family: 'Zen Maru Gothic', 'M PLUS Rounded 1c', sans-serif;
+            color: var(--muted);
+            margin-top: 4px;
+            line-height: 1.3;
+        }
+        .logo-sub .lead { font-weight: 900; font-size: 0.75rem; color: var(--text); }
+        .logo-sub .sub  { font-weight: 400; font-size: 0.65rem; }
+
+        .header-actions { display: flex; gap: 10px; align-items: center; }
+
+        .help-btn {
+            background: #f1f5f9;
+            color: var(--text);
+            border: none;
+            padding: 10px 18px;
+            border-radius: 9999px;
+            font-family: 'Zen Maru Gothic', 'M PLUS Rounded 1c', sans-serif;
+            font-weight: 700;
+            font-size: 0.85rem;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+        .help-btn:hover { background: #e2e8f0; transform: translateY(-2px); }
+
+        .login-btn {
+            background: var(--text);
+            color: #fff;
+            padding: 10px 20px;
+            border-radius: 9999px;
+            font-weight: 600;
+            cursor: pointer;
+            border: none;
+            transition: 0.2s;
+            font-size: 0.85rem;
+            font-family: inherit;
+        }
+        .login-btn:hover { transform: translateY(-2px); }
+
+        main {
+            padding: 40px 5%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        h2 {
+            font-size: 1.4rem;
+            font-weight: 900;
+            margin: 0 0 20px;
+            color: var(--text);
+            border-bottom: 2px solid #e2e8f0;
+            padding-bottom: 10px;
+        }
+        .section-members { margin-top: 50px; }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 24px;
+        }
+
+        /* 記事カードが入るまでの仮表示（次のステップで置き換えます） */
+        .placeholder {
+            grid-column: 1 / -1;
+            padding: 40px 20px;
+            border: 2px dashed #cbd5e1;
+            border-radius: 20px;
+            text-align: center;
+            color: var(--muted);
+            font-size: 0.9rem;
+        }
+
         @media (prefers-reduced-motion: reduce) {
-            #homeView, .start-btn { transition: none; }
-            .start-btn:hover { transform: none; }
+            #homeView, #contentView, .start-btn { transition: none; }
+            .start-btn:hover, .help-btn:hover, .login-btn:hover { transform: none; }
         }
     </style>
 </head>
 <body>
 
-<main id="homeView">
+<!-- ===== 入口画面 ===== -->
+<div id="homeView">
     <h1 class="home-title">NIHONGO<br>KEIZOKU</h1>
     <p class="home-subtitle">
         <span class="lead">Listening, Reading &amp; Shadowing</span>
         <span class="sub">5 mins a day</span>
     </p>
     <button type="button" class="start-btn" id="startBtn">START</button>
-</main>
+</div>
+
+<!-- ===== コンテンツ画面 ===== -->
+<div id="contentView">
+    <header>
+        <div class="logo-wrapper">
+            <div class="logo">NIHONGO KEIZOKU</div>
+            <div class="logo-sub">
+                <span class="lead">Listening, Reading &amp; Shadowing</span><br>
+                <span class="sub">5 mins a day</span>
+            </div>
+        </div>
+        <div class="header-actions">
+            <button type="button" class="help-btn" id="helpBtn">How to use / Cómo usar</button>
+            <button type="button" class="login-btn" id="loginBtn">Login</button>
+        </div>
+    </header>
+
+    <main>
+        <section>
+            <h2>Open Access / Acceso Abierto</h2>
+            <div id="freeGrid" class="grid">
+                <div class="placeholder">ここに無料記事のカードが入ります</div>
+            </div>
+        </section>
+
+        <section class="section-members">
+            <h2>Members Only / Solo para miembros</h2>
+            <div id="premiumGrid" class="grid">
+                <div class="placeholder">ここに会員限定記事のカードが入ります</div>
+            </div>
+        </section>
+    </main>
+</div>
 
 <script>
-    /*
-     * START を押した後の動作
-     *  - NEXT_URL に記事一覧ページのURLを入れると、フェードアウト後にそのページへ移動
-     *  - 空文字 '' のままなら、画面を閉じて "keizoku:start" イベントを発火
-     *    （一覧画面を同じHTMLに組み込む場合に使う）
-     */
-    const NEXT_URL = '';          // 例: 'articles.html'
-    const FADE_MS  = 500;
+    /* ===== 入口画面：STARTを押したとき ===== */
+    const FADE_MS = 500;
 
     const homeView = document.getElementById('homeView');
     const startBtn = document.getElementById('startBtn');
 
     function startApp() {
         startBtn.disabled = true;
-        homeView.classList.add('is-leaving');
+        homeView.classList.add('is-leaving');   // 入口画面をフェードアウト
 
         setTimeout(() => {
-            if (NEXT_URL) {
-                window.location.href = NEXT_URL;
-            } else {
-                document.body.style.overflow = '';
-                window.dispatchEvent(new CustomEvent('keizoku:start'));
-            }
+            window.dispatchEvent(new CustomEvent('keizoku:start'));  // 「始まった」と知らせる
         }, FADE_MS);
     }
 
     startBtn.addEventListener('click', startApp);
+
+    /* ===== コンテンツ画面：keizoku:start を受け取ったとき ===== */
+    const contentView = document.getElementById('contentView');
+
+    window.addEventListener('keizoku:start', () => {
+        document.body.classList.add('is-started');     // スクロールを許可
+        contentView.classList.add('is-visible');       // 表示する
+        setTimeout(() => {
+            contentView.classList.add('is-shown');     // ふわっと出す
+        }, 50);
+    });
 </script>
 </body>
 </html>

@@ -608,3 +608,67 @@ rt { font-size: 0.48em; letter-spacing: -0.02em; }
 @media (max-width: 420px) {
     .audio-panel .speed-end { display: none; }
 }
+/* =========================================================
+   修正：入口の余白・ボタン・見出しの色・スマホ2列
+   ========================================================= */
+
+/* 入口画面：サブタイトルとSTARTの間を詰める（70px → 32px） */
+.home-subtitle {
+    margin: 12px 0 32px;
+}
+
+/* How to use ボタンを四角い囲みに */
+.help-btn {
+    background: #fff;
+    border: 1.5px solid var(--text);
+    border-radius: 8px;
+    padding: 9px 16px;
+}
+.help-btn:hover {
+    background: #f1f5f9;
+}
+
+/* 見出しの色：無料は青、会員限定は紫 */
+main section:not(.section-members) > h2 {
+    color: #0369a1;
+    border-bottom-color: #7dd3fc;
+    border-left: 6px solid #0ea5e9;
+    padding-left: 12px;
+}
+.section-members > h2 {
+    color: var(--primary);
+    border-bottom-color: #c7d2fe;
+    border-left: 6px solid var(--primary);
+    padding-left: 12px;
+}
+
+/* スマホ：記事を2列に */
+@media (max-width: 600px) {
+    main { padding: 24px 4%; }
+    h2 { font-size: 1.15rem; }
+
+    .grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 12px;
+    }
+    .card { border-radius: 14px; }
+    .card-img-wrapper { height: 100px; }
+    .card-body { padding: 10px 12px; }
+    .card-title { font-size: 1rem; line-height: 1.6; }
+    .lock-badge {
+        font-size: 0.65rem;
+        padding: 3px 6px;
+        margin-top: 8px;
+    }
+
+    /* ヘッダーが2列の幅からはみ出さないよう、少し小さく */
+    header { padding: 10px 4%; }
+    .logo { font-size: 1.1rem; }
+    .logo-sub .lead { font-size: 0.65rem; }
+    .logo-sub .sub  { font-size: 0.6rem; }
+    .header-actions { gap: 6px; }
+    .help-btn, .login-btn {
+        padding: 8px 10px;
+        font-size: 0.7rem;
+    }
+}
